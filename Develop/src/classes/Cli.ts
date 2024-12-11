@@ -171,10 +171,23 @@ class Cli {
         },
       ])
       .then((answers) => {
-        // TODO: Use the answers object to pass the required properties to the Truck constructor
+        const truck = new truck(
+         // TODO: Use the answers object to pass the required properties to the Truck constructor
+           Cli.generateVin(),
+            answers.color,
+            answers.make,
+            answers.model,
+            parseInt(answers.year),
+            parseInt(answers.weight),
+            parseInt(answers.topSpeed),
+            []
+          );
         // TODO: push the truck to the vehicles array
+        this.vehicles.push(truck);
         // TODO: set the selectedVehicleVin to the vin of the truck
+        this.selectedVehicleVin = truck.vin;
         // TODO: perform actions on the truck
+        this.performActions();
       });
   }
 
@@ -235,15 +248,27 @@ class Cli {
       ])
       .then((answers) => {
         // TODO: Use the answers object to pass the required properties to the Motorbike constructor
+        const motorbike = new motorbike(
+            answers.color,
+            answers.make,
+            answers.model,
+            parseInt(answers.year),
+            parseInt(answers.weight),
+            parseInt(answers.topSpeed),
+            []
+        );
         // TODO: push the motorbike to the vehicles array
+        this.vehicles.push(motorbike);
         // TODO: set the selectedVehicleVin to the vin of the motorbike
+        this.selectedVehicleVin = motorbike.vin;
         // TODO: perform actions on the motorbike
+        this.performActions();
       });
   }
 
   // method to find a vehicle to tow
   // TODO: add a parameter to accept a truck object
-  findVehicleToTow(): void {
+  findVehicleToTow(trucks): void {
     inquirer
       .prompt([
         {
@@ -258,7 +283,22 @@ class Cli {
           }),
         },
       ])
-      .then((answers) => {
+      .then((answers) => {const selectedVehicle = answers.vehicleToTow;
+        // You can add logic here to check if the selected vehicle can be towed by any of the trucks
+        const compatibleTrucks = trucks.filter(truck => {
+          // Add your logic here to determine if the truck can tow the selected vehicle
+          return this.canTow(truck, selectedVehicle); // Assuming you have a method to check compatibility
+        });
+  
+        if (compatibleTrucks.length > 0) {
+          console.log('Compatible trucks:', compatibleTrucks);
+        } else {
+          console.log('No compatible trucks found for this vehicle.');
+        }
+      })
+      .catch((error) => {
+        console.error('Error during prompt:', error);
+      });
         // TODO: check if the selected vehicle is the truck
         // TODO: if it is, log that the truck cannot tow itself then perform actions on the truck to allow the user to select another action
         // TODO: if it is not, tow the selected vehicle then perform actions on the truck to allow the user to select another action
