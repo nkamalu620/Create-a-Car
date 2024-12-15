@@ -43,6 +43,28 @@ class Motorbike extends Vehicle {
 }
   // TODO: Implement the wheelie method
     // TODO: The method should log the message "Motorbike [make] [model] is doing a wheelie!"
+    performWheelie(): void {
+      if (!this.isWheelie) {
+          console.log(`Motorbike ${this.make} ${this.model} is doing a wheelie!`);
+          this.isWheelie = true;
+      } else {
+          console.log("Already doing a wheelie!");
+      }
+  }
+
+  stopWheelie(): void {
+      if (this.isWheelie) {
+          console.log("Stopping the wheelie.");
+          this.isWheelie = false;
+      } else {
+          console.log("Not currently doing a wheelie.");
+      }
+  }
+
+  getStatus(): string {
+      return this.isWheelie ? "Currently doing a wheelie." : "Not doing a wheelie.";
+  }
+}
 
   
   override printDetails(): void {

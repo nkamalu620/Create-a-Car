@@ -51,12 +51,33 @@ class Truck extends Vehicle{
   }
 }
   // TODO: Implement the tow method from the AbleToTow interface
-  tow(vehicle: Truck | Motorbike | Car): void {
+  class Truck implements AbleToTow {
+    // Implementing the tow method
+    tow(vehicle: Truck | Motorbike | Car): void {
+        if (vehicle instanceof Motorbike) {
+            console.log("The truck is towing a motorbike.");
+        } else if (vehicle instanceof Car) {
+            console.log("The truck is towing a car.");
+        } else {
+            console.log("The truck cannot tow another truck.");
+        }
+    }
+}
+
+// Example usage
+const myTruck = new Truck();
+const myCar = new Car(); // Assuming Car is defined
+const myMotorbike = new Motorbike(); // Assuming Motorbike is defined
+
+myTruck.tow(myCar);        // Output: The truck is towing a car.
+myTruck.tow(myMotorbike);  // Output: The truck is towing a motorbike.
+myTruck.tow
+  
     // TODO: Get the make an model of the vehicle if it exists
     // TODO: Check if the vehicle's weight is less than or equal to the truck's towing capacity
     // TODO: If it is, log that the vehicle is being towed
     // TODO: If it is not, log that the vehicle is too heavy to be towed
-  }
+  
 
   // TODO: Override the printDetails method from the Vehicle class
     // TODO: The method should call the printDetails method of the parent class
@@ -74,7 +95,7 @@ class Truck extends Vehicle{
       console.log(`Weight: ${this.weight} lbs`);
       console.log(`Top Speed: ${this.topSpeed} mph`);
       console.log(`Wheels: ${this.wheels}`);
-      console.log(`Towing Cpacity: ${this.towingCapacity}`);
+      console.log(`Towing Cpacity: ${this.towingCapacity}`)
     }
   }
 
